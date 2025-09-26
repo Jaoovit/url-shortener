@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
 
@@ -33,6 +32,8 @@ public class URLService {
             domain += ":" + request.getServerPort();
         }
 
+        url.setShortUrl(domain + "/" + hash);
+
         Date now = new Date();
         url.setCreateAt(now);
 
@@ -51,7 +52,7 @@ public class URLService {
 
     private Boolean urlValidator(String longUrl) {
         try {
-            new URI(longUrl).parseServerAuthority();
+            new java.net.URL(longUrl);
             return true;
         } catch (Exception e) {
             return false;
