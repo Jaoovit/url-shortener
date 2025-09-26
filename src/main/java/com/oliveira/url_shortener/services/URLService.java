@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,6 +19,8 @@ public class URLService {
 
     public ShortUrlDTO shortenUrl(String longUrl, HttpServletRequest request) {
         if (longUrl.length() < 1) throw new IllegalArgumentException("URL cannot be null");
+
+        if(!urlValidator(longUrl)) throw new IllegalArgumentException("The URL is not valid");
 
         URL url = new URL();
 
@@ -44,5 +47,14 @@ public class URLService {
         ShortUrlDTO shortUrl = new ShortUrlDTO(domain + "/" + hash);
 
         return shortUrl;
+    }
+
+    private Boolean urlValidator(String longUrl) {
+        try {
+            new URI(longUrl).parseServerAuthority();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
