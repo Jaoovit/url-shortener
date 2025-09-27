@@ -58,4 +58,17 @@ public class URLService {
             return false;
         }
     }
+
+    private URL findUrlById(UUID urlId) {
+        URL url = urlRepository.getReferenceById(urlId);
+
+        if (url == null) throw new IllegalArgumentException("Url not found");
+
+        return url;
+    }
+
+    private void deleteUrl(UUID urlId) {
+        findUrlById(urlId);
+        urlRepository.deleteById(urlId);
+    }
 }
