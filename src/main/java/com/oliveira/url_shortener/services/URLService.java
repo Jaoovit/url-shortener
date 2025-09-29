@@ -27,11 +27,13 @@ public class URLService {
 
         String hash = UUID.randomUUID().toString().substring(0,6);
 
-        String domain = request.getScheme() + "://" + request.getServerName();
-        if (request.getServerPort() != 80 && request.getServerPort() != 403) {
-            domain += ":" + request.getServerPort();
-        }
+        String scheme = request.getHeader("X-Forwarded-Proto");
+        if (scheme == null) scheme = request.getScheme();
 
+        String host = request.getHeader("X-Forwarded-Host");
+        if (host == null) host = request.getServerName();
+
+        String domain = scheme + "://" + host;
         url.setShortUrl(domain + "/" + hash);
 
         Date now = new Date();
@@ -45,9 +47,7 @@ public class URLService {
 
         urlRepository.save(url);
 
-        ShortUrlDTO shortUrl = new ShortUrlDTO(domain + "/" + hash);
-
-        return shortUrl;
+        return new ShortUrlDTO(domain + "/" + hash);
     }
 
     private Boolean urlValidator(String longUrl) {
