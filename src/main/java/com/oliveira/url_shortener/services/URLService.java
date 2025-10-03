@@ -53,6 +53,13 @@ public class URLService {
     public String redirect(String shortUrl) {
         URL url = findUrlByShortUrl(shortUrl);
 
+        Date now = new Date();
+
+        if (now.after(url.getExpireAt())) {
+            this.deleteUrl(url.getId());
+            throw new IllegalArgumentException("This url is expired");
+        }
+
         url.setClicks(url.getClicks() + 1);
         urlRepository.updateClicks(url.getId(), url.getClicks());
 
