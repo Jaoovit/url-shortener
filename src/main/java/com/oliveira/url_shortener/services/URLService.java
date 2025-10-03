@@ -50,6 +50,15 @@ public class URLService {
         return new ShortUrlDTO(domain + "/" + hash);
     }
 
+    public String redirect(String shortUrl) {
+        URL url = findUrlByShortUrl(shortUrl);
+
+        url.setClicks(url.getClicks() + 1);
+        urlRepository.updateClicks(url.getId(), url.getClicks());
+
+        return url.getLongUrl();
+    }
+
     private Boolean urlValidator(String longUrl) {
         try {
             new java.net.URL(longUrl);
@@ -67,12 +76,12 @@ public class URLService {
         return url;
     }
 
-    private String findLongUrl(String shortUrl) {
-        URL url = urlRepository.getUrlByLongUrl(shortUrl);
+    private URL findUrlByShortUrl(String shortUrl) {
+        URL url = urlRepository.getUrlByShortUrl(shortUrl);
 
         if (url == null) throw new IllegalArgumentException("Url not found");
 
-        return url.getLongUrl();
+        return url;
     }
 
     private void deleteUrl(UUID urlId) {
