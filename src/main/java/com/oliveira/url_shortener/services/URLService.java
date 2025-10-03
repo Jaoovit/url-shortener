@@ -67,6 +67,14 @@ public class URLService {
         return url;
     }
 
+    private String findLongUrl(String shortUrl) {
+        URL url = urlRepository.getUrlByLongUrl(shortUrl);
+
+        if (url == null) throw new IllegalArgumentException("Url not found");
+
+        return url.getLongUrl();
+    }
+
     private void deleteUrl(UUID urlId) {
         findUrlById(urlId);
         urlRepository.deleteById(urlId);
