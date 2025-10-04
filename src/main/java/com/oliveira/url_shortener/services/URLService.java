@@ -27,6 +27,8 @@ public class URLService {
 
         String hash = UUID.randomUUID().toString().substring(0,6);
 
+        url.setHash(hash);
+
         String scheme = request.getHeader("X-Forwarded-Proto");
         if (scheme == null) scheme = request.getScheme();
 

@@ -1,9 +1,6 @@
 package com.oliveira.url_shortener.domain.URL;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.UUID;
@@ -16,11 +13,23 @@ public class URL {
     @GeneratedValue
     private UUID id;
 
+    @Column(name = "long_url")
     private String longUrl;
+
+    @Column(name = "short_url")
     private String shortUrl;
+
+    @Column(name = "create_at")
     private Date createAt;
+
+    @Column(name = "expire_at")
     private Date expireAt;
+
+    @Column(name = "clicks")
     private int clicks;
+
+    @Column(name = "hash")
+    private String hash;
 
     public UUID getId() {
         return id;
@@ -69,4 +78,8 @@ public class URL {
     public void setClicks(int clicks) {
         this.clicks = clicks;
     }
+
+    public String getHash() { return hash; }
+
+    public void setHash(String hash) { this.hash = hash; }
 }
