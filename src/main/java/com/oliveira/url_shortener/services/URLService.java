@@ -1,5 +1,6 @@
 package com.oliveira.url_shortener.services;
 
+import com.oliveira.url_shortener.domain.URL.LongUrlDTO;
 import com.oliveira.url_shortener.domain.URL.ShortUrlDTO;
 import com.oliveira.url_shortener.domain.URL.URL;
 import com.oliveira.url_shortener.repositories.URLRepository;
@@ -52,8 +53,8 @@ public class URLService {
         return new ShortUrlDTO(domain + "/" + hash);
     }
 
-    public String redirect(String shortUrl) {
-        URL url = findUrlByShortUrl(shortUrl);
+    public LongUrlDTO redirect(String hash) {
+        URL url = findUrlByHash(hash);
 
         Date now = new Date();
 
@@ -65,7 +66,7 @@ public class URLService {
         url.setClicks(url.getClicks() + 1);
         urlRepository.updateClicks(url.getId(), url.getClicks());
 
-        return url.getLongUrl();
+        return new LongUrlDTO(url.getLongUrl());
     }
 
     private Boolean urlValidator(String longUrl) {
@@ -85,8 +86,8 @@ public class URLService {
         return url;
     }
 
-    private URL findUrlByShortUrl(String shortUrl) {
-        URL url = urlRepository.getUrlByShortUrl(shortUrl);
+    private URL findUrlByHash(String hash) {
+        URL url = urlRepository.getUrlByHash(hash);
 
         if (url == null) throw new IllegalArgumentException("Url not found");
 

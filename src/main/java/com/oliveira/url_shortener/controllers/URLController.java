@@ -22,15 +22,9 @@ public class URLController {
     }
 
     @GetMapping("/{hash}")
-    public ResponseEntity<Void> redirect(@PathVariable String hash,  HttpServletRequest request) {
-        try {
-            LongUrlDTO longUrl = urlService.redirect(hash);
-            return ResponseEntity.status(HttpStatus.FOUND)
-                    .header("Location", longUrl)
-                    .build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<LongUrlDTO> redirect(@PathVariable String hash,  HttpServletRequest request) {
+        LongUrlDTO longUrl = urlService.redirect(hash);
+        return ResponseEntity.ok(longUrl);
 
     }
 

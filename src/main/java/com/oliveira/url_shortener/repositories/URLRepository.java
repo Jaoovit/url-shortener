@@ -11,8 +11,8 @@ import java.util.UUID;
 
 public interface URLRepository extends JpaRepository<URL, UUID> {
 
-    @Query("SELECT e FROM URL e WHERE e.shortUrl = :shortUrl")
-    public URL getUrlByShortUrl(@Param("shortUrl") String shortUrl);
+    @Query("SELECT e FROM URL e WHERE e.hash = :hash")
+    public URL getUrlByHash(@Param("hash") String hash);
 
     @Transactional
     @Modifying
