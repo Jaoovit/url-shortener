@@ -22,10 +22,11 @@ public class URLController {
     }
 
     @GetMapping("/{hash}")
-    public ResponseEntity<LongUrlDTO> redirect(@PathVariable String hash,  HttpServletRequest request) {
-        LongUrlDTO longUrl = urlService.redirect(hash);
-        return ResponseEntity.ok(longUrl);
-
+    public ResponseEntity<Void> redirect(@PathVariable String hash) {
+        LongUrlDTO longUrlDTO = urlService.redirect(hash);
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header("Location", longUrlDTO.longUrl())
+                .build();
     }
 
 }

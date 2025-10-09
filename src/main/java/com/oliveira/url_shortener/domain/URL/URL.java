@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Table(name = "urls")
-@Entity()
+@Entity
 public class URL {
 
     @Id
