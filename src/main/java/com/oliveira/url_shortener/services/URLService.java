@@ -56,8 +56,6 @@ public class URLService {
     public LongUrlDTO redirect(String hash) {
         URL url = findUrlByHash(hash);
 
-        System.out.println(url.getLongUrl());
-
         Date now = new Date();
 
         if (now.after(url.getExpireAt())) {
@@ -90,8 +88,6 @@ public class URLService {
 
     private URL findUrlByHash(String hash) {
         URL url = urlRepository.getUrlByHash(hash);
-
-        System.out.println("URL object: " + url);
 
         if (url == null) throw new IllegalArgumentException("Url not found");
 

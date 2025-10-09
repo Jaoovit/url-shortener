@@ -22,7 +22,7 @@ public class URLController {
     }
 
     @GetMapping("/{hash}")
-    public ResponseEntity<Void> redirect(@PathVariable String hash) {
+    public ResponseEntity<LongUrlDTO> redirect(@PathVariable String hash) {
         LongUrlDTO longUrlDTO = urlService.redirect(hash);
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header("Location", longUrlDTO.longUrl())
