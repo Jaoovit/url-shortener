@@ -87,7 +87,7 @@ public class URLService {
     }
 
     private URL findUrlByHash(String hash) {
-        URL url = urlRepository.getUrlByHash(hash);
+        URL url = urlRepository.findByHash(hash);
 
         if (url == null) throw new IllegalArgumentException("Url not found");
 
