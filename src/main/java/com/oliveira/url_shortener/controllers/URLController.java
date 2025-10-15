@@ -21,12 +21,17 @@ public class URLController {
         return ResponseEntity.ok(shortUrl);
     }
 
-    @GetMapping("/{hash}")
+   @GetMapping("/{hash}")
     public ResponseEntity<LongUrlDTO> redirect(@PathVariable String hash) {
-        LongUrlDTO longUrlDTO = urlService.redirect(hash);
+       LongUrlDTO longUrlDTO = urlService.redirect(hash);
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header("Location", longUrlDTO.longUrl())
                 .build();
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("Test");
     }
 
 }

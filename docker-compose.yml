@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   traefik:
-    image: traefik:v2.11
+    image: traefik:v3.5
     command:
       - "--providers.docker=true"
       - "--entrypoints.web.address=:80"
@@ -25,7 +25,7 @@ services:
       - "traefik.http.routers.url-shortener-http.entrypoints=web"
       - "traefik.http.routers.url-shortener-http.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.url-shortener.rule=Host(`short.link`) && PathPrefix(`/`)"
+      - "traefik.http.routers.url-shortener.rule=Host(`short.link`)"
       - "traefik.http.routers.url-shortener.entrypoints=websecure"
       - "traefik.http.routers.url-shortener.tls.certresolver=myresolver"
       - "traefik.http.services.url-shortener.loadbalancer.server.port=8080"
@@ -43,7 +43,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
